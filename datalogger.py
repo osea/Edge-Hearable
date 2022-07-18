@@ -95,15 +95,19 @@ def get_microphone_device_id():
     for i in range(0, numdevices):
         if (p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels')) > 0:
             print("Input Device id ", i, " - ", p.get_device_info_by_host_api_device_index(0, i).get('name'))
+            print("Max input channels:", p.get_device_info_by_host_api_device_index(0, i).get('maxInputChannels'))
 
 if __name__ == '__main__':
     
     config = Config()
     get_microphone_device_id()
 
+    if (not os.path.exists("../logs/")):
+        os.mkdir("../logs/")
+
     now = time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time())) 
-    config.audiofilename = "./logs/"+now+r"_recording.wav"
-    config.imufilename = "./logs/"+now+r"_imu.txt"
+    config.audiofilename = "../logs/"+now+r"_recording.wav"
+    config.imufilename = "../logs/"+now+r"_imu.txt"
 
     stream_list, p = recv_multi_track(config)
     mainloop(config)
