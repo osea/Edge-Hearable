@@ -1,4 +1,3 @@
-
 /*!
  *  @file Adafruit_MPU6050.cpp
  *
@@ -123,7 +122,7 @@ bool Adafruit_MPU6050::_init(int32_t sensor_id) {
   if (gyro_sensor)
     delete gyro_sensor;
 
-  // temp_sensor = new Adafruit_MPU6050_Temp(this);
+  temp_sensor = new Adafruit_MPU6050_Temp(this);
   accel_sensor = new Adafruit_MPU6050_Accelerometer(this);
   gyro_sensor = new Adafruit_MPU6050_Gyro(this);
 
@@ -706,7 +705,7 @@ bool Adafruit_MPU6050::getEvent(sensors_event_t *accel, sensors_event_t *gyro,
   return true;
 }
 
-bool Adafruit_MPU6050::getEventRaw(uint16_t* info_buffer)
+bool Adafruit_MPU6050::getEventRaw(int16_t* info_buffer)
 {
   Adafruit_BusIO_Register data_reg =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);

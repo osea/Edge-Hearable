@@ -215,7 +215,7 @@ public:
   bool getEvent(sensors_event_t *accel, sensors_event_t *gyro,
                 sensors_event_t *temp);
 
-  bool getEventRaw(uint16_t *info_buffer);
+  bool getEventRaw(int16_t *info_buffer);
 
   mpu6050_accel_range_t getAccelerometerRange(void);
   void setAccelerometerRange(mpu6050_accel_range_t);

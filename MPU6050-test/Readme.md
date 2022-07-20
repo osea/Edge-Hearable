@@ -58,7 +58,7 @@
    gyroY *= SENSORS_DPS_TO_RADS;
    gyroZ *= SENSORS_DPS_TO_RADS;
    
-   //SENSORS_DPS_TO_RADS = 57.29577793F;
+   //SENSORS_DPS_TO_RADS = 0.017453293F;
    ```
 
    
