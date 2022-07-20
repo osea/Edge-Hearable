@@ -11,9 +11,11 @@ def s16(value):
 
 if __name__ == '__main__':
         
+    sensors_dps_to_rads = 0.017453293
+    sensors_gravity_standard = 9.80665
     #initialize serial port
     ser = serial.Serial()
-    ser.port = '/dev/tty.usbmodem11101' #Arduino serial port, should change accrodingly
+    ser.port = '/dev/cu.usbmodem21201' #Arduino serial port, should change accrodingly
     ser.baudrate = 115200
     ser.timeout = 10 
 
@@ -70,10 +72,18 @@ if __name__ == '__main__':
                 accY_l = rawAccY / accel_scale
                 accZ_l = rawAccZ / accel_scale
 
+                accX_l *= sensors_gravity_standard
+                accY_l *= sensors_gravity_standard
+                accZ_l *= sensors_gravity_standard
+
                 gyro_scale = 65.5 # MPU6050_RANGE_500_DEG
                 gyroX_l = rawGyroX / gyro_scale
                 gyroY_l = rawGyroY / gyro_scale
                 gyroZ_l = rawGyroZ / gyro_scale
+
+                gyroX_l *= sensors_dps_to_rads
+                gyroY_l *= sensors_dps_to_rads
+                gyroZ_l *= sensors_dps_to_rads
 
                 temperature_l = (rawTemp / 340.0) + 36.53
 
@@ -99,10 +109,18 @@ if __name__ == '__main__':
                 accY_r = rawAccY / accel_scale
                 accZ_r = rawAccZ / accel_scale
 
+                accX_r *= sensors_gravity_standard
+                accY_r *= sensors_gravity_standard
+                accZ_r *= sensors_gravity_standard
+
                 gyro_scale = 65.5 # MPU6050_RANGE_500_DEG
                 gyroX_r = rawGyroX / gyro_scale
                 gyroY_r = rawGyroY / gyro_scale
                 gyroZ_r = rawGyroZ / gyro_scale
+
+                gyroX_r *= sensors_dps_to_rads
+                gyroY_r *= sensors_dps_to_rads
+                gyroZ_r *= sensors_dps_to_rads
 
                 temperature_r = (rawTemp / 340.0) + 36.53
                 if debug:
