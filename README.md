@@ -13,10 +13,10 @@ Open-sourced edge compputing hearable platform from Pervasive Interaction Lab of
 
 1. Connect Zoom H6 and Arduino Mega 2560 to the PC.
 
-2. Check the port of Arduino Mega 2560 -> Change Config.ser.port.
+2. Check the port of Arduino Mega 2560 -> Change Config.ser.port. (using --imu_port on command)
 
-3. Run datalogger.py -> Get Zoom H6 device ID -> Change Config.input_device_id.
+3. Run datalogger.py -> Get Zoom H6 device ID -> Change Config.input_device_id. (using --input_device_id on command)
 
-4. Run datalogger.py -> Get the TK UI to freely start and stop your recording.
+4. Run datalogger.py -> Get the TK UI to freely start and stop your recording. (Don't forget to set save directory using --save_dir on command)
 
    
