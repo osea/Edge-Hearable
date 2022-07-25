@@ -3,6 +3,7 @@ from threading import Thread, Event
 import pyaudio
 import wave
 import time
+import argparse
 import tkinter as tk
 from tkinter.ttk import *
 
@@ -12,6 +13,13 @@ import time
 from threading import Thread
 
 debug = True
+
+parser = argparse.ArgumentParser()
+parser.add_argument('--input_device_id', type=int, default=0)
+parser.add_argument('--save_dir', type=str, default='../logs/')
+parser.add_argument('--imu_port', type=str, default='/dev/cu.usbmodem113201')
+
+args = parser.parse_args()
 
 def s16(value):
     return -(value & 0x8000) | (value & 0x7fff)
@@ -25,7 +33,7 @@ class Config:
         self.total_channels = 6
         self.chunk_size = 4096
         
-        self.input_device_id = [0] # For H6 device. Please use the get_microphone_device_id to get 
+        self.input_device_id = [args.input_device_id] # For H6 device. Please use the get_microphone_device_id to get 
         self.start_rec = False
         self.audiofilename = ""
         self.imufilename = ""
@@ -40,7 +48,7 @@ class Config:
         # serial port open procedure
 
         self.ser = serial.Serial()
-        self.ser.port = '/dev/cu.usbmodem21201' #Arduino serial port, should change accrodingly
+        self.ser.port = args.imu_port #Arduino serial port, should change accrodingly
         self.ser.baudrate = 115200
         self.ser.timeout = 10 
         self.ser.open()
@@ -238,12 +246,14 @@ if __name__ == '__main__':
     config = Config()
     get_microphone_device_id()
 
-    if (not os.path.exists("../logs/")):
-        os.mkdir("../logs/")
+    if not os.path.exists(args.save_dir):
+        os.mkdir(args.save_dir)
+    # if (not os.path.exists("../logs/")):
+    #     os.mkdir("../logs/")
 
     now = time.strftime("%Y-%m-%d-%H_%M_%S",time.localtime(time.time())) 
-    config.audiofilename = "../logs/"+now+r"_recording.wav"
-    config.imufilename = "../logs/"+now+r"_imu.txt"
+    config.audiofilename = args.save_dir+now+r"_recording.wav"
+    config.imufilename = args.save_dir+now+r"_imu.txt"
 
     with open(config.imufilename, 'w') as imuFile:
         imuFile.write("timestamp" + "," + "accX_l" + "," + "accY_l" + "," + "accZ_l" + "," + "gyroX_l"+ "," + "gyroY_l" + "," + "gyroZ_l"  + "," + "temp_l" + "," + "accX_r" + "," + "accY_r" + "," + "accZ_r" + "," + "gyroX_r"+ "," + "gyroY_r" + "," + "gyroZ_r"  + "," + "temp_r" + "\n")

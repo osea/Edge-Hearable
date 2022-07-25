@@ -211,7 +211,10 @@ public:
   bool begin(uint8_t i2c_addr = MPU6050_I2CADDR_DEFAULT, TwoWire *wire = &Wire,
              int32_t sensorID = 0);
 
+  bool to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len);
+ 
   void getRawDataBytes(uint8_t *array);
+  void getRawDataHex(char *array);
 
   // Adafruit_Sensor API/Interface
   bool getEvent(sensors_event_t *accel, sensors_event_t *gyro,

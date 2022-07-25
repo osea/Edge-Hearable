@@ -687,26 +687,44 @@ void Adafruit_MPU6050::_read(void) {
  *     @brief  Updates the measurement data for all sensors simultaneously
  */
 /**************************************************************************/
+
+bool Adafruit_MPU6050::to_hex(char* dest, size_t dest_len, const uint8_t* values, size_t val_len) {
+    if(dest_len < (val_len*2+1)) /* check that dest is large enough */
+        return false;
+    *dest = '\0'; /* in case val_len==0 */
+    while(val_len--) {
+        /* sprintf directly to where dest points */
+        sprintf(dest, "%02X", *values);
+        dest += 2;
+        ++values;
+    }
+    return true;
+}
+
+void Adafruit_MPU6050::getRawDataHex(char *array) {
+  // get raw readings
+  Adafruit_BusIO_Register data_reg =
+      Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
+  
+  uint8_t buffer[14];
+  char hexNum[2];
+
+  data_reg.read(buffer, 14);
+  
+  for (int i = 0; i < 14; i++){
+    sprintf(hexNum, "%02X", buffer[i]);
+    array[2*i] = hexNum[0];
+    array[2*i+1] = hexNum[1];
+   }
+    array[28] = '\0';
+}
+
 void Adafruit_MPU6050::getRawDataBytes(uint8_t *array) {
   // get raw readings
   Adafruit_BusIO_Register data_reg =
       Adafruit_BusIO_Register(i2c_dev, MPU6050_ACCEL_OUT, 14);
 
   data_reg.read(array, 14);
-
-  // uint8_t buffer[14];
-  // data_reg.read(buffer, 14);
-
-  // array[0] = buffer[0] << 8 | buffer[1];
-  // array[1] = buffer[2] << 8 | buffer[3];
-  // array[2] = buffer[4] << 8 | buffer[5];
-
-  // array[3] = buffer[6] << 8 | buffer[7];
-
-  // array[4] = buffer[8] << 8 | buffer[9];
-  // array[5] = buffer[10] << 8 | buffer[11];
-  // array[6] = buffer[12] << 8 | buffer[13];
-
 }
 
 /**************************************************************************/

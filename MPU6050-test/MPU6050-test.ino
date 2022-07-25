@@ -7,7 +7,6 @@
 Adafruit_MPU6050 mpu_l;
 Adafruit_MPU6050 mpu_r;
 
-<<<<<<< HEAD
 uint8_t data_l[14];
 uint8_t data_r[14];
 
@@ -25,8 +24,6 @@ void errorBlk(void) {
   delay(2000);    
   
 }
-=======
->>>>>>> 317d7d8278d963dfe54e9445dfd1de083c1f4c61
 
 void setup(void) {
   pinMode(LED_BUILTIN, OUTPUT);
@@ -35,20 +32,14 @@ void setup(void) {
     delay(10); // will pause Zero, Leonardo, etc until serial console opens
 
   // Try to initialize!
-<<<<<<< HEAD
   if (!mpu_l.begin(0X69)) {
     Serial.println("Failed to find the left MPU6050 chip");
-=======
-  if (!mpu_l.begin(0x69)) {
-    Serial.println("Failed to find MPU6050 chip");
->>>>>>> 317d7d8278d963dfe54e9445dfd1de083c1f4c61
     while (1) {
       delay(10);
       errorBlk();
     }
   }
-<<<<<<< HEAD
-  
+
   if (!mpu_r.begin()) {
     Serial.println("Failed to find the right MPU6050 chip");
     while (1) {
@@ -58,20 +49,6 @@ void setup(void) {
   }
   
   //four config param: MPU6050_RANGE_2_G, MPU6050_RANGE_4_G, MPU6050_RANGE_8_G, MPU6050_RANGE_16_G
-  mpu_l.setAccelerometerRange(MPU6050_RANGE_4_G);
-  mpu_r.setAccelerometerRange(MPU6050_RANGE_4_G);
-  delay(100);
-=======
-  Serial.println("MPU6050 Found!");
-
-  if (!mpu_r.begin(0x68)) {
-    Serial.println("Failed to find MPU6050 chip");
-    while (1) {
-      delay(10);
-    }
-  }
-  Serial.println("MPU6050 Found!");
-
   mpu_l.setAccelerometerRange(MPU6050_RANGE_4_G);
   mpu_r.setAccelerometerRange(MPU6050_RANGE_4_G);
   
@@ -90,8 +67,6 @@ void setup(void) {
   //   Serial.println("+-16G");
   //   break;
   // }
-  mpu_l.setGyroRange(MPU6050_RANGE_500_DEG);
-  mpu_r.setGyroRange(MPU6050_RANGE_500_DEG);
 
   // Serial.print("Gyro range set to: ");
   // switch (mpu.getGyroRange()) {
@@ -136,8 +111,6 @@ void setup(void) {
   //   Serial.println("5 Hz");
   //   break;
   // }
->>>>>>> 317d7d8278d963dfe54e9445dfd1de083c1f4c61
-
   //four config param: MPU6050_RANGE_250_DEG, MPU6050_RANGE_500_DEG, MPU6050_RANGE_1000_DEG, MPU6050_RANGE_2000_DEG
   mpu_l.setGyroRange(MPU6050_RANGE_500_DEG);
   mpu_r.setGyroRange(MPU6050_RANGE_500_DEG);
@@ -150,7 +123,6 @@ void loop() {
   mpu_l.getRawDataBytes(data_l);
   mpu_r.getRawDataBytes(data_r);
 
-<<<<<<< HEAD
   for(int i = 0; i < sizeof(data_l); i++){
     sprintf(hexNum, "%02X", data_l[i]);
     hexStr =  hexStr + hexNum;
@@ -204,72 +176,4 @@ void loop() {
 ////  Serial.print(temp_r.temperature);
 //
 //  Serial.println("");
-=======
-  /* Get new sensor events with the readings */
-  // sensors_event_t a, g, temp;
-  // mpu.getEvent(&a, &g, &temp);
-  uint16_t buffer_l[6];
-  uint16_t buffer_r[6];
-
-  mpu_l.getEventRaw(buffer_l);
-  mpu_r.getEventRaw(buffer_r);
-
-  //L ACC RAW
-  Serial.print(buffer_l[0]);
-  Serial.print(',');
-  Serial.print(buffer_l[1]);
-  Serial.print(',');
-  Serial.print(buffer_l[2]);
-  Serial.print(',');
-
-  //L GYR RAW
-  Serial.print(buffer_l[3]);
-  Serial.print(',');
-  Serial.print(buffer_l[4]);
-  Serial.print(',');
-  Serial.print(buffer_l[5]);
-  Serial.print(',');
-
-  //R ACC RAW
-  Serial.print(buffer_r[0]);
-  Serial.print(',');
-  Serial.print(buffer_r[1]);
-  Serial.print(',');
-  Serial.print(buffer_r[2]);
-  Serial.print(',');
-
-  //R GYR RAW
-  Serial.print(buffer_r[3]);
-  Serial.print(',');
-  Serial.print(buffer_r[4]);
-  Serial.print(',');
-  Serial.print(buffer_r[5]);
-
-  Serial.println("");
-
-  /* Print out the values */
-//  Serial.print("Acceleration X: ");
-  // Serial.print(a.acceleration.x);
-  // Serial.print(",");
-  // Serial.print(a.acceleration.y);
-  // Serial.print(",");
-  // Serial.print(a.acceleration.z);
-  // Serial.print(",");
-//  Serial.println(" m/s^2");
-
-//  Serial.print("Rotation X: ");
-  // Serial.print(g.gyro.x);
-  // Serial.print(",");
-//  Serial.print(", Y: ");
-  // Serial.print(g.gyro.y);
-  // Serial.print(",");
-//  Serial.print(", Z: ");
-  // Serial.print(g.gyro.z);
-//  Serial.println(" rad/s");
-
-//  Serial.print("Temperature: ");
-//  Serial.print(temp.temperature);
-//  Serial.println(" degC");
-
->>>>>>> 317d7d8278d963dfe54e9445dfd1de083c1f4c61
 }
